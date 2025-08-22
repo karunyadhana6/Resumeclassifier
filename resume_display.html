@@ -1,0 +1,2550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Analysis Resource List</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 50%, #2d3748 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 24px;
+            color: #e2e8f0;
+            font-size: 11px;
+        }
+
+        .container {
+            max-width: min(1600px, 95vw);
+            margin: 0 auto;
+            background: rgba(45, 55, 72, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: clamp(12px, 3vw, 24px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3), 
+                        0 8px 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-height: calc(100vh - 48px);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: white;
+            padding: clamp(20px, 5vw, 40px) clamp(15px, 4vw, 30px);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="white" opacity="0.05"><polygon points="0,0 1000,0 1000,80 0,100"/></svg>');
+            background-size: cover;
+        }
+
+        .header h1 {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            margin-bottom: 12px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            z-index: 1;
+            line-height: 1.2;
+        }
+
+        .header p {
+            font-size: clamp(0.875rem, 2.5vw, 1rem);
+            opacity: 0.85;
+            position: relative;
+            z-index: 1;
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+            padding: clamp(16px, 4vw, 32px) clamp(10px, 3vw, 20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            gap: clamp(12px, 3vw, 16px);
+        }
+
+        .stat-item {
+            text-align: center;
+            background: rgba(45, 55, 72, 0.8);
+            padding: clamp(16px, 4vw, 24px) clamp(12px, 3vw, 16px);
+            border-radius: clamp(8px, 2vw, 16px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 0; /* Prevent flex item overflow */
+        }
+
+        .stat-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-number {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #90cdf4 0%, #63b3ed 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            margin-bottom: 8px;
+            line-height: 1.1;
+        }
+
+        .stat-label {
+            font-size: clamp(0.7rem, 1.8vw, 0.75rem);
+            color: #cbd5e0;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .controls {
+            padding: clamp(16px, 4vw, 28px);
+            background: linear-gradient(135deg, #3a4553 0%, #2d3748 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: clamp(12px, 3vw, 20px);
+            align-items: center;
+        }
+
+        .search-box {
+            grid-column: 1 / -1; /* Take full width on first row */
+            min-width: 0;
+            padding: clamp(10px, 2.5vw, 12px) clamp(16px, 4vw, 20px);
+            border: 2px solid #4a5568;
+            border-radius: 50px;
+            font-size: clamp(12px, 2.5vw, 13px);
+            outline: none;
+            transition: all 0.3s ease;
+            background: rgba(45, 55, 72, 0.9);
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+            color: #e2e8f0;
+            width: 100%;
+        }
+
+        .search-box:focus {
+            border-color: #90cdf4;
+            box-shadow: 0 0 0 3px rgba(144, 205, 244, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .search-box::placeholder {
+            color: #a0aec0;
+        }
+
+        .filter-select, .advanced-filter {
+            padding: clamp(10px, 2.5vw, 12px) clamp(16px, 4vw, 20px);
+            border: 2px solid #4a5568;
+            border-radius: clamp(8px, 2vw, 50px);
+            background: rgba(45, 55, 72, 0.9);
+            backdrop-filter: blur(10px);
+            font-size: clamp(11px, 2.2vw, 13px);
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            min-width: 0;
+            color: #e2e8f0;
+            width: 100%;
+        }
+
+        .filter-select:hover, .advanced-filter:hover {
+            border-color: #90cdf4;
+            transform: translateY(-1px);
+        }
+
+        .export-options {
+            display: flex;
+            gap: clamp(8px, 2vw, 10px);
+            align-items: center;
+            flex-wrap: wrap;
+            grid-column: 1 / -1; /* Take full width */
+            justify-content: center;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            max-height: 75vh;
+            background: rgba(45, 55, 72, 0.5);
+            margin: 0;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            /* Enhanced scrollbar styling */
+            scrollbar-width: thin;
+            scrollbar-color: #4a5568 transparent;
+            border-radius: clamp(8px, 2vw, 16px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .table-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .table-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .table-container::-webkit-scrollbar-thumb {
+            background: #4a5568;
+            border-radius: 4px;
+        }
+
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: #5a6575;
+        }
+
+        table {
+            width: 100%;
+            min-width: 1200px; /* Ensure table doesn't get too cramped */
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: clamp(10px, 1.8vw, 11px);
+            background: transparent;
+        }
+
+        th {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+            color: white;
+            padding: clamp(12px, 3vw, 16px) clamp(8px, 2vw, 12px);
+            text-align: left;
+            font-weight: 700;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border: none;
+            font-size: clamp(9px, 1.5vw, 11px);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: clamp(8px, 2vw, 12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+            background: rgba(45, 55, 72, 0.7);
+            backdrop-filter: blur(5px);
+            transition: all 0.2s ease;
+            color: #e2e8f0;
+            font-size: clamp(9px, 1.5vw, 10px);
+            max-width: 200px; /* Prevent cells from getting too wide */
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        td:nth-child(1) { /* Filename */
+            max-width: 250px;
+            min-width: 150px;
+        }
+
+        td:nth-child(2), /* Score */
+        td:nth-child(3), /* Category */
+        td:nth-child(4), /* Rating */
+        td:nth-child(5) { /* Skills Count */
+            max-width: 120px;
+            min-width: 80px;
+        }
+
+        .skills {
+            font-size: clamp(8px, 1.5vw, 10px);
+            line-height: 1.5;
+            max-width: 180px;
+            overflow: hidden;
+        }
+
+        .contact-info {
+            font-size: clamp(8px, 1.5vw, 10px);
+            line-height: 1.6;
+            color: #cbd5e0;
+            max-width: 150px;
+        }
+
+        tr:hover td {
+            background: rgba(144, 205, 244, 0.1);
+            transform: scale(1.001);
+        }
+
+        .category {
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 9px;
+            font-weight: 700;
+            text-align: center;
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .category:hover {
+            transform: scale(1.05);
+        }
+
+        .category.data-scientist {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .category.senior-data-scientist {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+        }
+
+        .category.data-analyst {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        .category.senior-data-analyst {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: white;
+        }
+
+        .category.junior-data-analyst {
+            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+            color: white;
+        }
+
+        .category.testing-engineer,
+        .category.senior-testing-engineer,
+        .category.qa-tester {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .category.business-analyst {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+        }
+
+        .category.senior-data-manager,
+        .category.data-manager {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            border: 2px solid #10b981;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .category.project-manager {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            border: 2px solid #06b6d4;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+        }
+
+        .category.data-team-lead {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            border: 2px solid #f59e0b;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .category.unmatched {
+            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+            color: white;
+        }
+
+        .rating {
+            padding: 4px 8px;
+            border-radius: 50px;
+            font-size: 9px;
+            font-weight: 800;
+            text-align: center;
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+        }
+
+        .rating:hover {
+            transform: scale(1.1);
+        }
+
+        .rating.rating-3 {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .rating.rating-2 {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .rating.rating-1 {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        .rating.rating-0 {
+            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+            color: white;
+        }
+
+        .score {
+            font-weight: 800;
+            padding: 8px 16px;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 13px;
+            transition: all 0.2s ease;
+        }
+
+        .score:hover {
+            transform: scale(1.05);
+        }
+
+        .score.high {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .score.medium {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .score.low {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        .skills {
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        .skills-highlight {
+            background: linear-gradient(135deg, #90cdf4 0%, #63b3ed 100%);
+            color: #1a202c;
+            padding: 3px 8px;
+            border-radius: 20px;
+            margin: 2px;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 9px;
+            text-transform: capitalize;
+            transition: all 0.2s ease;
+        }
+
+        .skills-highlight:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(144, 205, 244, 0.3);
+        }
+
+        .contact-info {
+            font-size: 10px;
+            line-height: 1.6;
+            color: #cbd5e0;
+        }
+
+        .selection-indicator {
+            display: inline-block;
+            padding: 3px 6px;
+            border-radius: 12px;
+            font-size: 8px;
+            font-weight: 700;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            transition: all 0.2s ease;
+        }
+
+        .selection-indicator.yes {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+        }
+
+        .selection-indicator.no {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            opacity: 0.6;
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+        }
+
+        .selection-indicator:hover {
+            transform: scale(1.05);
+        }
+
+        .hr-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 16px;
+            font-size: 9px;
+            font-weight: 700;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            transition: all 0.2s ease;
+            min-width: 70px;
+        }
+
+        .hr-status.hr-approved {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.4);
+        }
+
+        .hr-status.hr-hold {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            box-shadow: 0 2px 6px rgba(245, 158, 11, 0.4);
+        }
+
+        .hr-status.hr-rejected {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
+        }
+
+        .hr-status.hr-pending {
+            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+            color: white;
+            box-shadow: 0 2px 6px rgba(100, 116, 139, 0.3);
+        }
+
+        .hr-status:hover {
+            transform: scale(1.05);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #a0aec0;
+            font-size: 14px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: white;
+            padding: 20px 24px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15),
+                        0 4px 15px rgba(251, 191, 36, 0.3);
+            z-index: 1000;
+            max-width: 400px;
+            font-size: 12px;
+            font-weight: 500;
+            animation: slideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            backdrop-filter: blur(10px);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15),
+                        0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15),
+                        0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .notification .close {
+            float: right;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .file-upload {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            background: linear-gradient(135deg, #90cdf4 0%, #63b3ed 100%);
+            color: #1a202c;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(144, 205, 244, 0.3);
+        }
+
+        .file-upload:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(144, 205, 244, 0.4);
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .action-button {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .action-button.primary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .action-button.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .navigation {
+            background: linear-gradient(135deg, #3a4553 0%, #2d3748 100%);
+            padding: 20px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-button {
+            padding: 12px 20px;
+            border: 2px solid #4a5568;
+            border-radius: 50px;
+            background: rgba(45, 55, 72, 0.9);
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-button:hover {
+            border-color: #90cdf4;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(144, 205, 244, 0.3);
+        }
+
+        .nav-button.active {
+            background: linear-gradient(135deg, #90cdf4 0%, #63b3ed 100%);
+            color: #1a202c;
+            border-color: #90cdf4;
+        }
+
+        .quick-action-btn {
+            padding: 6px 8px;
+            border: none;
+            border-radius: 50%;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .quick-action-btn.approved {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+        }
+
+        .quick-action-btn.hold {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            box-shadow: 0 2px 6px rgba(245, 158, 11, 0.3);
+        }
+
+        .quick-action-btn.rejected {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+        }
+
+        .quick-action-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .action-button.secondary {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .action-button.secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+        }
+
+        .hr-quick-panel {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .quick-hr-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .quick-hr-btn.approved {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .quick-hr-btn.hold {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        .quick-hr-btn.rejected {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .quick-hr-btn.reset {
+            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+            color: white;
+        }
+
+        .quick-hr-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .hr-selection-checkbox {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        .hr-notes {
+            background: rgba(45, 55, 72, 0.8);
+            border: 1px solid #4a5568;
+            border-radius: 8px;
+            padding: 8px;
+            font-size: 10px;
+            color: #cbd5e0;
+            resize: vertical;
+            min-height: 40px;
+            width: 100%;
+        }
+
+        .hr-notes:focus {
+            border-color: #90cdf4;
+            outline: none;
+        }
+
+        .hr-priority {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .hr-priority.high {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .hr-priority.medium {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        .hr-priority.low {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .interview-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .interview-status.scheduled {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+        }
+
+        .interview-status.completed {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .interview-status.pending {
+            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+            color: white;
+        }
+
+        .hr-analytics {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .analytics-card {
+            background: rgba(45, 55, 72, 0.6);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .analytics-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: #90cdf4;
+            display: block;
+        }
+
+        .analytics-label {
+            font-size: 11px;
+            color: #cbd5e0;
+            margin-top: 5px;
+        }
+
+        .hr-workflow-stage {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin: 2px;
+        }
+
+        .stage-screening {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+        }
+
+        .stage-technical {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+        }
+
+        .stage-final {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .stage-offer {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        .hr-timeline {
+            font-size: 9px;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+
+        .bulk-actions-panel {
+            background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .advanced-filter {
+            background: rgba(45, 55, 72, 0.9);
+            border: 2px solid #4a5568;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 12px;
+            color: #e2e8f0;
+            min-width: 150px;
+        }
+
+        .score-range-slider {
+            width: 150px;
+            margin: 0 10px;
+        }
+
+        .export-options {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* Enhanced responsive design and mobile-first approach */
+        @media (max-width: 1200px) {
+            .controls {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            
+            .analytics-grid {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+                font-size: 12px;
+            }
+            
+            .container {
+                min-height: calc(100vh - 24px);
+            }
+            
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .stats {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                padding: 16px 12px;
+                gap: 12px;
+            }
+            
+            .controls {
+                padding: 16px;
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .search-box {
+                font-size: 14px;
+                padding: 12px 16px;
+            }
+            
+            .advanced-filter, .filter-select {
+                font-size: 13px;
+                padding: 10px 12px;
+            }
+            
+            .table-container {
+                margin: 12px 0;
+            }
+            
+            table {
+                min-width: 800px; /* Reduced for mobile */
+                font-size: 10px;
+            }
+            
+            th, td {
+                padding: 6px 4px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 8px;
+                align-items: stretch;
+            }
+            
+            .nav-button {
+                text-align: center;
+                justify-self: stretch;
+            }
+            
+            .hr-analytics {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .analytics-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 10px;
+            }
+            
+            .analytics-card {
+                padding: 10px;
+            }
+            
+            .analytics-number {
+                font-size: 18px;
+            }
+            
+            .bulk-actions-panel {
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 8px;
+            }
+            
+            .container {
+                border-radius: 12px;
+                min-height: calc(100vh - 16px);
+            }
+            
+            .header {
+                padding: 15px 10px;
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+                padding: 12px 8px;
+            }
+            
+            .stat-item {
+                padding: 12px 8px;
+            }
+            
+            .controls {
+                padding: 12px;
+                gap: 10px;
+            }
+            
+            .analytics-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            
+            .export-options {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            table {
+                min-width: 600px;
+                font-size: 9px;
+            }
+            
+            th, td {
+                padding: 4px 2px;
+            }
+            
+            .skills, .contact-info {
+                max-width: 120px;
+                font-size: 8px;
+            }
+        }
+
+        /* Dark mode and theme enhancements */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #1a202c 0%, #0f0f23 50%, #1a202c 100%);
+            }
+        }
+
+        /* Reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .stat-item:hover,
+            .category:hover,
+            tr:hover td {
+                transform: none;
+            }
+        }
+
+        /* Enhanced notification system */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(45, 55, 72, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            max-width: 400px;
+            opacity: 0;
+            transform: translateY(-100%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            gap: 12px;
+        }
+
+        .notification-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .notification-message {
+            flex: 1;
+            color: #e2e8f0;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            line-height: 1;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+        }
+
+        .notification.success {
+            border-left: 4px solid #10b981;
+        }
+
+        .notification.error {
+            border-left: 4px solid #ef4444;
+        }
+
+        .notification.warning {
+            border-left: 4px solid #f59e0b;
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(26, 32, 44, 0.9);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            text-align: center;
+            color: #e2e8f0;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(144, 205, 244, 0.2);
+            border-left: 4px solid #90cdf4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-spinner p {
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        /* Enhanced focus states for accessibility */
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible {
+            outline: 2px solid #90cdf4;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 4px rgba(144, 205, 244, 0.1);
+        }
+
+        /* Smooth transitions for interactive elements */
+        .nav-button,
+        .stat-item,
+        .category,
+        button,
+        input,
+        select {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Enhanced hover effects */
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(144, 205, 244, 0.2);
+        }
+
+        .category:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Mobile-specific touch improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .stat-item:hover,
+            .nav-button:hover,
+            .category:hover {
+                transform: none;
+            }
+            
+            .stat-item:active,
+            .nav-button:active,
+            .category:active {
+                transform: scale(0.98);
+            }
+        }
+
+        /* Enhanced responsive notification positioning */
+        @media (max-width: 768px) {
+            .notification {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+            
+            .notification-content {
+                padding: 12px;
+            }
+            
+            .notification-message {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Resume Analysis Dashboard</h1>
+            <p>Comprehensive analysis of candidate profiles and skill assessments</p>
+        </div>
+
+        <div class="navigation">
+            <a href="resume_display.html" class="nav-button active">📊 Main Dashboard</a>
+            <button onclick="createHRDashboard()" class="nav-button">🏢 HR Selection Process</button>
+            <div style="margin-left: auto; display: flex; gap: 10px;">
+                <span style="color: #cbd5e0; font-size: 12px; display: flex; align-items: center;">
+                    🔄 Integrated workflow: Analyze → Screen → Interview → Decision
+                </span>
+            </div>
+        </div>
+
+        <div class="hr-analytics" id="hr-analytics">
+            <h3 style="color: #e2e8f0; margin: 0 0 10px 0; font-size: 16px;">📊 HR Analytics Dashboard</h3>
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <span class="analytics-number" id="conversion-rate">0%</span>
+                    <span class="analytics-label">Approval Rate</span>
+                </div>
+                <div class="analytics-card">
+                    <span class="analytics-number" id="avg-time-to-decision">0</span>
+                    <span class="analytics-label">Avg. Days to Decision</span>
+                </div>
+                <div class="analytics-card">
+                    <span class="analytics-number" id="pending-interviews">0</span>
+                    <span class="analytics-label">Pending Interviews</span>
+                </div>
+                <div class="analytics-card">
+                    <span class="analytics-number" id="top-skills-demand">N/A</span>
+                    <span class="analytics-label">Most Sought Skill</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-number" id="total-resumes">0</span>
+                <span class="stat-label">Total Resumes</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="matched-candidates">0</span>
+                <span class="stat-label">Matched Candidates</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="avg-score">0</span>
+                <span class="stat-label">Average Score</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="senior-candidates">0</span>
+                <span class="stat-label">Senior Level</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="management-candidates">0</span>
+                <span class="stat-label">Management Roles</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="high-performers">0</span>
+                <span class="stat-label">High Performers</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="technical-specialists">0</span>
+                <span class="stat-label">Technical Specialists</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="hr-approved">0</span>
+                <span class="stat-label">HR Approved</span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <input type="text" class="search-box" id="search-input" placeholder="Search by filename, skills, or category...">
+            <select class="filter-select" id="category-filter">
+                <option value="">All Categories</option>
+                <option value="Senior Data Manager">Senior Data Manager</option>
+                <option value="Data Manager">Data Manager</option>
+                <option value="Project Manager">Project Manager</option>
+                <option value="Data Team Lead">Data Team Lead</option>
+                <option value="Senior Data Scientist">Senior Data Scientist</option>
+                <option value="Data Scientist">Data Scientist</option>
+                <option value="Senior Data Analyst">Senior Data Analyst</option>
+                <option value="Data Analyst">Data Analyst</option>
+                <option value="Junior Data Analyst">Junior Data Analyst</option>
+                <option value="Senior Testing Engineer">Senior Testing Engineer</option>
+                <option value="Testing Engineer">Testing Engineer</option>
+                <option value="QA Tester">QA Tester</option>
+                <option value="Business Analyst">Business Analyst</option>
+                <option value="Unmatched">Unmatched</option>
+            </select>
+            <select class="filter-select" id="selection-filter">
+                <option value="">All Candidates</option>
+                <option value="high-performer">High Performers Only</option>
+                <option value="senior-level">Senior Level Only</option>
+                <option value="entry-level">Entry Level Only</option>
+                <option value="management-potential">Management Potential</option>
+                <option value="technical-specialist">Technical Specialists</option>
+            </select>
+            <select class="filter-select" id="hr-filter">
+                <option value="">All HR Status</option>
+                <option value="HR_Approved">HR Approved</option>
+                <option value="HR_Hold">HR Hold</option>
+                <option value="HR_Rejected">HR Rejected</option>
+                <option value="Pending Review">Pending Review</option>
+            </select>
+            <select class="advanced-filter" id="priority-filter">
+                <option value="">All Priorities</option>
+                <option value="High">High Priority</option>
+                <option value="Medium">Medium Priority</option>
+                <option value="Low">Low Priority</option>
+            </select>
+            <select class="advanced-filter" id="interview-filter">
+                <option value="">All Interview Status</option>
+                <option value="Scheduled">Interview Scheduled</option>
+                <option value="Completed">Interview Completed</option>
+                <option value="Pending">Interview Pending</option>
+            </select>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <label style="color: #cbd5e0; font-size: 11px;">Score Range:</label>
+                <input type="range" id="score-min" class="score-range-slider" min="0" max="1" step="0.1" value="0">
+                <span id="score-range-display" style="color: #90cdf4; font-size: 11px; min-width: 80px;">0.0 - 1.0</span>
+                <input type="range" id="score-max" class="score-range-slider" min="0" max="1" step="0.1" value="1">
+            </div>
+            <label class="file-upload">
+                📁 Upload CSV
+                <input type="file" id="csv-file-input" accept=".csv" />
+            </label>
+            <div class="export-options">
+                <button class="action-button primary" onclick="openHRWorkflow()">
+                    🏢 HR Workflow
+                </button>
+                <button class="action-button secondary" onclick="exportHRReport()">
+                    📊 Export Report
+                </button>
+                <button class="action-button secondary" onclick="exportInterviewSchedule()">
+                    📅 Interview Schedule
+                </button>
+            </div>
+        </div>
+
+        <div class="hr-quick-panel" id="hr-quick-panel" style="display: none;">
+            <div class="bulk-actions-panel">
+                <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+                    <span style="color: #e2e8f0; font-weight: 600;">HR Quick Actions:</span>
+                    <span id="hr-selected-count" style="color: #90cdf4; font-weight: 600;">0 selected</span>
+                    <button class="quick-hr-btn approved" onclick="bulkHRAction('HR_Approved')">✅ Approve Selected</button>
+                    <button class="quick-hr-btn hold" onclick="bulkHRAction('HR_Hold')">⏸️ Hold Selected</button>
+                    <button class="quick-hr-btn rejected" onclick="bulkHRAction('HR_Rejected')">❌ Reject Selected</button>
+                    <button class="quick-hr-btn reset" onclick="clearHRSelection()">🔄 Clear Selection</button>
+                    
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <label style="color: #cbd5e0; font-size: 11px;">Bulk Priority:</label>
+                        <select id="bulk-priority" class="advanced-filter" style="min-width: 100px;">
+                            <option value="">Set Priority</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                        <button class="quick-hr-btn" onclick="bulkSetPriority()" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">🎯 Set</button>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <label style="color: #cbd5e0; font-size: 11px;">Interview:</label>
+                        <button class="quick-hr-btn" onclick="bulkScheduleInterview()" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);">📅 Schedule</button>
+                    </div>
+                    
+                    <label style="color: #cbd5e0; display: flex; align-items: center; gap: 8px; margin-left: auto;">
+                        <input type="checkbox" id="enable-hr-mode" onchange="toggleHRMode()"> Enable HR Selection Mode
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="resume-table">
+                <thead>
+                    <tr>
+                        <th id="hr-checkbox-header" style="display: none;">
+                            <input type="checkbox" id="select-all-hr" onchange="toggleSelectAllHR()" class="hr-selection-checkbox">
+                        </th>
+                        <th>Filename</th>
+                        <th>Score</th>
+                        <th>Category</th>
+                        <th>Rating</th>
+                        <th>Skills Count</th>
+                        <th>Key Skills</th>
+                        <th>Data Science Skills</th>
+                        <th>Programming Skills</th>
+                        <th>Database Skills</th>
+                        <th>PM Skills</th>
+                        <th>Testing Skills</th>
+                        <th>Experience</th>
+                        <th>Education</th>
+                        <th>Contact</th>
+                        <th>🌟 High Performer</th>
+                        <th>👨‍💼 Senior Level</th>
+                        <th>🌱 Entry Level</th>
+                        <th>📋 Management</th>
+                        <th>🔧 Tech Specialist</th>
+                        <th>🏢 HR Status</th>
+                        <th>🎯 Priority</th>
+                        <th>📅 Interview</th>
+                        <th>📝 Notes</th>
+                        <th>🔄 Workflow</th>
+                        <th>⚡ Quick Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- Data will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="no-results" class="no-results" style="display: none;">
+            <h3>No matching results found</h3>
+            <p>Try adjusting your search criteria</p>
+        </div>
+    </div>
+
+    <script>
+        let resumeData = [];
+        let filteredData = [];
+        let hrModeEnabled = false;
+        let selectedHRCandidates = new Set();
+        let hrAnalytics = {
+            totalProcessed: 0,
+            approvalRate: 0,
+            avgDecisionTime: 0,
+            interviewsPending: 0
+        };
+
+        // Embedded CSV data as fallback (updated with selection criteria and new HR fields)
+        const csvData = `Filename,Overall Score,Category,Rating,Rating Description,Total Skills Count,All Skills,Data Science Skills,Data Analysis Skills,Programming Skills,Database Skills,Cloud Skills,Project Management Skills,Testing Skills,Job Requirement Matches,Matched Skills Count,Keywords Matched,Experience Years,Education Level,Email,Phone,LinkedIn,Selected_High_Performer,Selected_Senior_Level,Selected_Entry_Level,Selected_Management_Potential,Selected_Technical_Specialist,HR_Selection_Status,HR_Priority,Interview_Status,HR_Notes,Workflow_Stage,Date_Applied,Last_Updated
+Test Analyst - Template 14.pdf,0.48,Senior Testing Engineer,2,Mid-Level/Standard (Score: 0.4-0.7),14,"R; excel; analytics; r; java; scrum; jira; test automation; selenium; regression testing; automated testing; qa; bug tracking; test execution",N/A,"excel; analytics","R; r; java",N/A,,"scrum; jira","test automation; selenium; regression testing; automated testing; qa; bug tracking; test execution","R; excel; r; scrum; test automation; selenium",6,8,10,bachelor,,+1234456789,,No,No,No,No,No,Pending Review,Medium,Pending,Strong testing background but limited data science exposure,Screening,2024-01-15,2024-01-20
+Modern nursing resume.docx,0.0,Unmatched - No Data Science Skills,0,Unmatched/Not Suitable,0,,N/A,,,N/A,,,,,0,0,0,unknown,,,,No,No,No,No,No,Pending Review,Low,Pending,Not relevant for current openings,Screening,2024-01-10,2024-01-12
+KARUNYA DHANASEKARAN 1.docx,0.25,Unmatched - No Data Science Skills,0,Unmatched/Not Suitable,3,"excel; communication; attention to detail",N/A,excel,,N/A,,,,,"excel; communication; attention to detail",3,8,5,masters,karu1489@gmail.com,+353892419716,,No,No,No,No,No,Pending Review,Low,Pending,Limited technical skills for data roles,Screening,2024-01-12,2024-01-15
+business-analyst-resume-example.pdf,0.444,Data Analyst,2,Mid-Level/Standard (Score: 0.4-0.7),10,"python; R; sql; excel; tableau; kpi; analytics; r; business process; problem solving","python; sql","python; sql; excel; tableau; kpi; analytics","python; R; sql; r",N/A,,"business process",,"python; R; sql; excel; tableau; r; problem solving",7,7,0,b.s,blake.thorn@email.com,1234567890,,No,No,Yes,No,No,HR_Hold,Medium,Scheduled,Good analytical skills need technical depth assessment,Technical,2024-01-18,2024-01-25
+data-analyst-resume-example.pdf,0.504,Data Scientist,2,Mid-Level/Standard (Score: 0.4-0.7),13,"python; R; sql; pandas; scikit-learn; logistic regression; a/b testing; excel; tableau; reporting; kpi; analytics; r","python; sql; pandas; scikit-learn; logistic regression; a/b testing","python; sql; pandas; excel; tableau; reporting; kpi; analytics","python; R; sql; r",N/A,,,,,"python; R; sql; pandas; a/b testing; excel; tableau; reporting; r",9,11,0,b.s,farahmartin@email.com,1234567890,,No,No,No,No,No,HR_Rejected,Low,Completed,Interview revealed gaps in advanced analytics,Final,2024-01-20,2024-02-01
+data-analyst-intern-resume-example.pdf,0.591,Data Scientist,2,Mid-Level/Standard (Score: 0.4-0.7),16,"python; R; sql; machine learning; data science; tableau; dashboard; analytics; mysql; aws; r; sas; project management; agile; project delivery; communication","python; sql; machine learning; data science","python; sql; tableau; dashboard; analytics","python; R; sql; r; sas",mysql,aws,"project management; agile; project delivery",,"python; R; sql; machine learning; data science; tableau; dashboard; mysql; aws; r; project management; agile; communication",13,13,0,b.s,diego.perez@email.com,1234567890,,No,No,No,Yes,No,HR_Approved,High,Completed,Excellent technical skills and team fit,Offer,2024-01-22,2024-02-05
+Karunya Dhanasekaran_V1.docx,0.95,Senior Data Manager,3,Senior/Advanced Level (Score: 0.7-1.0),36,"python; sql; machine learning; excel; data visualization; tableau; power bi; etl; reporting; analytics; oracle; hadoop; spark; hive; databricks; git; github; project management; agile; waterfall; jira; confluence; risk management; resource allocation; stakeholder management; project planning; cross-functional teams; business process; test automation; test planning; regression testing; defect management; test reporting; communication; problem solving; collaboration","python; sql; machine learning","python; sql; excel; data visualization; tableau; power bi; etl; reporting; analytics","python; sql; git; github","oracle; hadoop; spark; hive",databricks,"project management; agile; waterfall; jira; confluence; risk management; resource allocation; stakeholder management; project planning; cross-functional teams; business process","test automation; test planning; regression testing; defect management; test reporting","python; sql; machine learning; excel; data visualization; tableau; power bi; reporting; project management; agile; stakeholder management; project planning; test automation; communication; problem solving",15,20,13,masters,KARUnyadhanasekaran6@GMAIL.COM|karunya,3538924197,,Yes,Yes,No,Yes,Yes,HR_Approved,High,Completed,Outstanding candidate with leadership potential,Offer,2024-01-25,2024-02-08
+Modern bold sales resume.docx,0.0,Unmatched - No Data Science Skills,0,Unmatched/Not Suitable,0,,N/A,,,N/A,,,,,0,0,0,0,unknown,,,,No,No,No,No,No,Pending Review,Low,Pending,Sales background not relevant for technical roles,Screening,2024-01-08,2024-01-10`;
+
+        // Load CSV data with multiple methods
+        async function loadCSVData() {
+            try {
+                // First, try to fetch the new CSV file with selections
+                let response = await fetch('resume_summary_with_selections.csv');
+                if (!response.ok) {
+                    // Fallback to the original CSV file
+                    response = await fetch('resume_summary.csv');
+                }
+                
+                if (response.ok) {
+                    const csvText = await response.text();
+                    parseCSVData(csvText);
+                    console.log('CSV loaded from file successfully');
+                    return;
+                }
+                throw new Error('File not found');
+            } catch (error) {
+                console.log('Could not load CSV file, using embedded data:', error.message);
+                // Fallback to embedded data
+                parseCSVData(csvData);
+                
+                // Show a notification to the user
+                showNotification('Using sample data with selection criteria. To load your own data, please use a local web server or upload the CSV file.');
+            }
+        }
+
+        // Parse CSV data
+        function parseCSVData(csvText) {
+            const lines = csvText.trim().split('\n');
+            const headers = lines[0].split(',');
+            
+            resumeData = lines.slice(1).map(line => {
+                const values = parseCSVLine(line);
+                const row = {};
+                headers.forEach((header, index) => {
+                    row[header] = values[index] || '';
+                });
+                return row;
+            });
+            
+            // Load saved data from localStorage if available
+            const savedData = localStorage.getItem('resumeData');
+            if (savedData) {
+                try {
+                    const parsedSavedData = JSON.parse(savedData);
+                    // Merge saved HR statuses with current data
+                    parsedSavedData.forEach(savedRow => {
+                        const currentRow = resumeData.find(row => row.Filename === savedRow.Filename);
+                        if (currentRow && savedRow['HR_Selection_Status']) {
+                            currentRow['HR_Selection_Status'] = savedRow['HR_Selection_Status'];
+                        }
+                    });
+                } catch (error) {
+                    console.log('Error loading saved data:', error);
+                }
+            }
+            
+            filteredData = [...resumeData];
+            updateStats();
+            updateHRAnalytics();
+            renderTable();
+        }
+
+        // Parse CSV line handling commas within quotes
+        function parseCSVLine(line) {
+            const values = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    values.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            values.push(current.trim());
+            
+            return values;
+        }
+
+        // Update statistics
+        function updateStats() {
+            const total = resumeData.length;
+            const matched = resumeData.filter(row => !row.Category.includes('Unmatched')).length;
+            const avgScore = resumeData.reduce((sum, row) => sum + parseFloat(row['Overall Score'] || 0), 0) / total;
+            const senior = resumeData.filter(row => row.Category.includes('Senior')).length;
+            const management = resumeData.filter(row => {
+                const category = row.Category.toLowerCase();
+                return category.includes('manager') || category.includes('project manager') || category.includes('team lead');
+            }).length;
+
+            // New selection criteria statistics
+            const highPerformers = resumeData.filter(row => 
+                row['Selected_High_Performer'] === 'Yes' || 
+                (parseFloat(row['Overall Score'] || 0) >= 0.75 && parseInt(row.Rating || 0) >= 3)
+            ).length;
+            
+            const technicalSpecialists = resumeData.filter(row => 
+                row['Selected_Technical_Specialist'] === 'Yes' || 
+                (row['Data Science Skills'] && row['Data Science Skills'] !== 'N/A' && row['Data Science Skills'].trim())
+            ).length;
+
+            // HR status statistics
+            const hrApproved = resumeData.filter(row => 
+                (row['HR_Selection_Status'] || 'Pending Review') === 'HR_Approved'
+            ).length;
+
+            document.getElementById('total-resumes').textContent = total;
+            document.getElementById('matched-candidates').textContent = matched;
+            document.getElementById('avg-score').textContent = avgScore.toFixed(3);
+            document.getElementById('senior-candidates').textContent = senior;
+            document.getElementById('management-candidates').textContent = management;
+            document.getElementById('high-performers').textContent = highPerformers;
+            document.getElementById('technical-specialists').textContent = technicalSpecialists;
+            document.getElementById('hr-approved').textContent = hrApproved;
+        }
+
+        // Update HR Analytics
+        function updateHRAnalytics() {
+            const totalCandidates = resumeData.length;
+            const processedCandidates = resumeData.filter(row => 
+                row['HR_Selection_Status'] && row['HR_Selection_Status'] !== 'Pending Review'
+            );
+            
+            const approvedCandidates = resumeData.filter(row => 
+                row['HR_Selection_Status'] === 'HR_Approved'
+            );
+            
+            const interviewsScheduled = resumeData.filter(row => 
+                row['Interview_Status'] === 'Scheduled'
+            );
+            
+            const interviewsPending = resumeData.filter(row => 
+                row['Interview_Status'] === 'Pending'
+            );
+
+            // Calculate approval rate
+            const approvalRate = processedCandidates.length > 0 
+                ? ((approvedCandidates.length / processedCandidates.length) * 100).toFixed(1)
+                : 0;
+
+            // Calculate average time to decision (simplified - using random data for demo)
+            const avgDecisionTime = Math.floor(Math.random() * 10) + 3;
+
+            // Find most demanded skill
+            const allSkills = resumeData
+                .filter(row => row['Data Science Skills'] && row['Data Science Skills'] !== 'N/A')
+                .map(row => row['Data Science Skills'].split(';'))
+                .flat()
+                .map(skill => skill.trim().toLowerCase())
+                .filter(skill => skill);
+            
+            const skillCounts = {};
+            allSkills.forEach(skill => {
+                skillCounts[skill] = (skillCounts[skill] || 0) + 1;
+            });
+            
+            const topSkill = Object.keys(skillCounts).reduce((a, b) => 
+                skillCounts[a] > skillCounts[b] ? a : b, 'python'
+            );
+
+            // Update analytics display
+            document.getElementById('conversion-rate').textContent = approvalRate + '%';
+            document.getElementById('avg-time-to-decision').textContent = avgDecisionTime + ' days';
+            document.getElementById('pending-interviews').textContent = interviewsPending.length;
+            document.getElementById('top-skills-demand').textContent = topSkill.charAt(0).toUpperCase() + topSkill.slice(1);
+        }
+
+        // Get category class for styling
+        function getCategoryClass(category) {
+            const categoryLower = category.toLowerCase();
+            
+            // Management roles
+            if (categoryLower.includes('senior data manager')) return 'senior-data-manager';
+            if (categoryLower.includes('data manager')) return 'data-manager';
+            if (categoryLower.includes('project manager')) return 'project-manager';
+            if (categoryLower.includes('data team lead')) return 'data-team-lead';
+            
+            // Data science roles
+            if (categoryLower.includes('senior data scientist')) return 'senior-data-scientist';
+            if (categoryLower.includes('data scientist')) return 'data-scientist';
+            if (categoryLower.includes('senior data analyst')) return 'senior-data-analyst';
+            if (categoryLower.includes('junior data analyst')) return 'junior-data-analyst';
+            if (categoryLower.includes('data analyst')) return 'data-analyst';
+            
+            // Testing roles
+            if (categoryLower.includes('senior testing engineer')) return 'senior-testing-engineer';
+            if (categoryLower.includes('testing engineer')) return 'testing-engineer';
+            if (categoryLower.includes('qa tester')) return 'qa-tester';
+            
+            // Other roles
+            if (categoryLower.includes('business analyst')) return 'business-analyst';
+            
+            return 'unmatched';
+        }
+
+        // Get score class for styling
+        function getScoreClass(score) {
+            const numScore = parseFloat(score);
+            if (numScore >= 0.7) return 'high';
+            if (numScore >= 0.4) return 'medium';
+            return 'low';
+        }
+
+        // Format skills for display
+        function formatSkills(skillsText, maxLength = 100) {
+            if (!skillsText || skillsText === 'N/A') return 'N/A';
+            
+            const skills = skillsText.split(';').map(s => s.trim()).filter(s => s);
+            if (skills.length === 0) return 'N/A';
+            
+            let formatted = skills.slice(0, 5).map(skill => 
+                `<span class="skills-highlight">${skill}</span>`
+            ).join(' ');
+            
+            if (skills.length > 5) {
+                formatted += ` <small>(+${skills.length - 5} more)</small>`;
+            }
+            
+            return formatted;
+        }
+
+        // Render table
+        function renderTable() {
+            const tbody = document.getElementById('table-body');
+            const noResults = document.getElementById('no-results');
+            
+            if (filteredData.length === 0) {
+                tbody.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            noResults.style.display = 'none';
+            
+            tbody.innerHTML = filteredData.map(row => {
+                // Get selection criteria values (with fallback calculation if not present)
+                const highPerformer = row['Selected_High_Performer'] || 
+                    (parseFloat(row['Overall Score'] || 0) >= 0.75 && parseInt(row.Rating || 0) >= 3 ? 'Yes' : 'No');
+                const seniorLevel = row['Selected_Senior_Level'] || 
+                    (parseInt(row['Experience Years'] || 0) >= 3 && parseFloat(row['Overall Score'] || 0) >= 0.6 ? 'Yes' : 'No');
+                const entryLevel = row['Selected_Entry_Level'] || 
+                    (parseInt(row['Experience Years'] || 0) <= 2 && parseFloat(row['Overall Score'] || 0) >= 0.3 ? 'Yes' : 'No');
+                const managementPotential = row['Selected_Management_Potential'] || 
+                    ((row['Project Management Skills'] && row['Project Management Skills'] !== 'N/A' && row['Project Management Skills'].trim()) && 
+                     parseInt(row['Experience Years'] || 0) >= 2 ? 'Yes' : 'No');
+                const technicalSpecialist = row['Selected_Technical_Specialist'] || 
+                    (row['Data Science Skills'] && row['Data Science Skills'] !== 'N/A' && row['Data Science Skills'].trim() ? 'Yes' : 'No');
+
+                const hrCheckbox = hrModeEnabled ? 
+                    `<td style="text-align: center;"><input type="checkbox" class="hr-selection-checkbox" data-filename="${row.Filename}" onchange="updateHRSelection()"></td>` : '';
+
+                return `
+                <tr>
+                    ${hrCheckbox}
+                    <td><strong>${row.Filename || 'Unknown'}</strong></td>
+                    <td>
+                        <span class="score ${getScoreClass(row['Overall Score'])}">
+                            ${parseFloat(row['Overall Score'] || 0).toFixed(3)}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="category ${getCategoryClass(row.Category)}">
+                            ${row.Category || 'Unknown'}
+                        </span>
+                    </td>
+                    <td style="text-align: center;">
+                        <span class="rating rating-${row.Rating || 0}">
+                            ${row.Rating || '0'}/3
+                        </span>
+                    </td>
+                    <td style="text-align: center;">${row['Total Skills Count'] || '0'}</td>
+                    <td class="skills">${formatSkills(row['All Skills'])}</td>
+                    <td class="skills">${formatSkills(row['Data Science Skills'])}</td>
+                    <td class="skills">${formatSkills(row['Programming Skills'])}</td>
+                    <td class="skills">${formatSkills(row['Database Skills'])}</td>
+                    <td class="skills">${formatSkills(row['Project Management Skills'])}</td>
+                    <td class="skills">${formatSkills(row['Testing Skills'])}</td>
+                    <td style="text-align: center;">${row['Experience Years'] || '0'} years</td>
+                    <td>${row['Education Level'] || 'Unknown'}</td>
+                    <td class="contact-info">
+                        ${row.Email ? `📧 ${row.Email}<br>` : ''}
+                        ${row.Phone ? `📞 ${row.Phone}<br>` : ''}
+                        ${row.LinkedIn ? `🔗 LinkedIn` : ''}
+                    </td>
+                    <td style="text-align: center;">${renderSelectionIndicator(highPerformer)}</td>
+                    <td style="text-align: center;">${renderSelectionIndicator(seniorLevel)}</td>
+                    <td style="text-align: center;">${renderSelectionIndicator(entryLevel)}</td>
+                    <td style="text-align: center;">${renderSelectionIndicator(managementPotential)}</td>
+                    <td style="text-align: center;">${renderSelectionIndicator(technicalSpecialist)}</td>
+                    <td style="text-align: center;">${renderHRStatus(row['HR_Selection_Status'] || 'Pending Review')}</td>
+                    <td style="text-align: center;">${renderPriority(row['HR_Priority'] || 'Medium')}</td>
+                    <td style="text-align: center;">${renderInterviewStatus(row['Interview_Status'] || 'Pending')}</td>
+                    <td style="max-width: 150px;">${renderHRNotes(row.Filename, row['HR_Notes'] || '')}</td>
+                    <td style="text-align: center;">${renderWorkflowStage(row['Workflow_Stage'] || 'Screening')}</td>
+                    <td style="text-align: center;">${renderQuickActions(row.Filename, row['HR_Selection_Status'] || 'Pending Review')}</td>
+                </tr>`;
+            }).join('');
+        }
+
+        // Render selection indicator
+        function renderSelectionIndicator(value) {
+            const isSelected = value === 'Yes' || value === true;
+            const className = isSelected ? 'yes' : 'no';
+            const text = isSelected ? 'Yes' : 'No';
+            return `<span class="selection-indicator ${className}">${text}</span>`;
+        }
+
+        // Render HR status indicator
+        function renderHRStatus(status) {
+            const statusMap = {
+                'HR_Approved': { text: 'Approved', class: 'hr-approved', icon: '✅' },
+                'HR_Hold': { text: 'Hold', class: 'hr-hold', icon: '⏸️' },
+                'HR_Rejected': { text: 'Rejected', class: 'hr-rejected', icon: '❌' },
+                'Pending Review': { text: 'Pending', class: 'hr-pending', icon: '⏳' }
+            };
+            
+            const statusInfo = statusMap[status] || statusMap['Pending Review'];
+            return `<span class="hr-status ${statusInfo.class}">${statusInfo.icon} ${statusInfo.text}</span>`;
+        }
+
+        // Render priority indicator
+        function renderPriority(priority) {
+            const priorityMap = {
+                'High': { class: 'high', label: 'High Priority' },
+                'Medium': { class: 'medium', label: 'Medium Priority' },
+                'Low': { class: 'low', label: 'Low Priority' }
+            };
+            
+            const priorityInfo = priorityMap[priority] || priorityMap['Medium'];
+            return `<span class="hr-priority ${priorityInfo.class}">${priorityInfo.label}</span>`;
+        }
+
+        // Render interview status indicator
+        function renderInterviewStatus(status) {
+            const statusMap = {
+                'Scheduled': { class: 'scheduled', label: 'Interview Scheduled' },
+                'Completed': { class: 'completed', label: 'Interview Completed' },
+                'Pending': { class: 'pending', label: 'Interview Pending' }
+            };
+            
+            const statusInfo = statusMap[status] || statusMap['Pending'];
+            return `<span class="interview-status ${statusInfo.class}">${statusInfo.label}</span>`;
+        }
+
+        // Render HR notes with expandable textarea
+        function renderHRNotes(filename, notes) {
+            return `
+                <div style="position: relative;">
+                    <div style="max-height: 40px; overflow: hidden;" class="hr-notes-content">
+                        ${notes.replace(/\n/g, '<br>')}
+                    </div>
+                    <textarea class="hr-notes" data-filename="${filename}" style="display: none;" onchange="updateHRNote(this)">
+                        ${notes}
+                    </textarea>
+                    <button class="quick-action-btn" style="position: absolute; top: 4px; right: 4px; padding: 4px 8px; font-size: 10px;" onclick="editHRNote(this)">
+                        ✏️ Edit
+                    </button>
+                </div>`;
+        }
+
+        // Edit HR note handler
+        function editHRNote(button) {
+            const textarea = button.parentElement.querySelector('textarea');
+            const content = button.parentElement.querySelector('.hr-notes-content');
+            
+            if (textarea.style.display === 'none' || !textarea.style.display) {
+                // Switch to edit mode
+                textarea.style.display = 'block';
+                content.style.display = 'none';
+                button.textContent = '💾 Save';
+            } else {
+                // Save changes
+                const newValue = textarea.value.trim();
+                const filename = textarea.dataset.filename;
+                
+                if (newValue) {
+                    // Update resumeData
+                    const candidate = resumeData.find(row => row.Filename === filename);
+                    if (candidate) {
+                        candidate['HR_Notes'] = newValue;
+                    }
+                    
+                    // Update localStorage
+                    localStorage.setItem('resumeData', JSON.stringify(resumeData));
+                    
+                    // Update content display
+                    content.innerHTML = newValue.replace(/\n/g, '<br>');
+                }
+                
+                // Switch back to view mode
+                textarea.style.display = 'none';
+                content.style.display = 'block';
+                button.textContent = '✏️ Edit';
+            }
+        }
+
+        // Render workflow stage indicator
+        function renderWorkflowStage(stage) {
+            const stageMap = {
+                'Screening': { class: 'screening', label: 'Screening' },
+                'Technical': { class: 'technical', label: 'Technical Interview' },
+                'Final': { class: 'final', label: 'Final Interview' },
+                'Offer': { class: 'offer', label: 'Offer' }
+            };
+            
+            const stageInfo = stageMap[stage] || stageMap['Screening'];
+            return `<span class="hr-workflow-stage ${stageInfo.class}">${stageInfo.label}</span>`;
+        }
+
+        // Render quick action buttons for HR decisions
+        function renderQuickActions(filename, currentStatus) {
+            if (currentStatus === 'HR_Approved') {
+                return `<div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
+                    <button class="quick-action-btn approved" onclick="quickHRAction('${filename}', 'HR_Hold')" title="Move to Hold">⏸️</button>
+                    <button class="quick-action-btn rejected" onclick="quickHRAction('${filename}', 'HR_Rejected')" title="Reject">❌</button>
+                </div>`;
+            } else if (currentStatus === 'HR_Hold') {
+                return `<div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
+                    <button class="quick-action-btn approved" onclick="quickHRAction('${filename}', 'HR_Approved')" title="Approve">✅</button>
+                    <button class="quick-action-btn rejected" onclick="quickHRAction('${filename}', 'HR_Rejected')" title="Reject">❌</button>
+                </div>`;
+            } else if (currentStatus === 'HR_Rejected') {
+                return `<div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
+                    <button class="quick-action-btn approved" onclick="quickHRAction('${filename}', 'HR_Approved')" title="Approve">✅</button>
+                    <button class="quick-action-btn hold" onclick="quickHRAction('${filename}', 'HR_Hold')" title="Hold">⏸️</button>
+                </div>`;
+            } else {
+                return `<div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
+                    <button class="quick-action-btn approved" onclick="quickHRAction('${filename}', 'HR_Approved')" title="Approve">✅</button>
+                    <button class="quick-action-btn hold" onclick="quickHRAction('${filename}', 'HR_Hold')" title="Hold">⏸️</button>
+                    <button class="quick-action-btn rejected" onclick="quickHRAction('${filename}', 'HR_Rejected')" title="Reject">❌</button>
+                </div>`;
+            }
+        }
+
+        // Quick HR action handler
+        function quickHRAction(filename, newStatus) {
+            const candidate = resumeData.find(row => row.Filename === filename);
+            if (candidate) {
+                candidate['HR_Selection_Status'] = newStatus;
+                
+                // Update localStorage
+                localStorage.setItem('resumeData', JSON.stringify(resumeData));
+                
+                // Re-render table
+                renderTable();
+                
+                // Show notification
+                showNotification(`Status updated to ${newStatus} for ${filename}`, 'success');
+            }
+        }
+
+        // Toggle HR mode
+        function toggleHRMode() {
+            hrModeEnabled = !hrModeEnabled;
+            const hrPanel = document.getElementById('hr-quick-panel');
+            const hrHeader = document.getElementById('hr-checkbox-header');
+            const selectAllCheckbox = document.getElementById('select-all-hr');
+            const selectedCountLabel = document.getElementById('hr-selected-count');
+            
+            if (hrModeEnabled) {
+                hrPanel.style.display = 'flex';
+                hrHeader.style.display = '';
+                selectAllCheckbox.checked = false;
+                selectedHRCandidates.clear();
+                
+                // Update all rows to be selectable
+                const allCheckboxes = document.querySelectorAll('.hr-selection-checkbox');
+                allCheckboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                    checkbox.disabled = false;
+                });
+                
+                showNotification('HR Selection Mode enabled', 'success');
+            } else {
+                hrPanel.style.display = 'none';
+                hrHeader.style.display = 'none';
+                
+                // Reset all HR selections
+                const allCheckboxes = document.querySelectorAll('.hr-selection-checkbox');
+                allCheckboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                    checkbox.disabled = true;
+                });
+                
+                // Clear any existing selections
+                selectedHRCandidates.clear();
+                updateHRSelectedCount();
+                
+                showNotification('HR Selection Mode disabled', 'info');
+            }
+        }
+
+        // Update HR selected count display
+        function updateHRSelectedCount() {
+            const count = selectedHRCandidates.size;
+            const label = document.getElementById('hr-selected-count');
+            label.textContent = `${count} selected`;
+        }
+
+        // Toggle select all HR candidates
+        function toggleSelectAllHR() {
+            const selectAllCheckbox = document.getElementById('select-all-hr');
+            const allCheckboxes = document.querySelectorAll('.hr-selection-checkbox');
+            
+            allCheckboxes.forEach(checkbox => {
+                checkbox.checked = selectAllCheckbox.checked;
+                if (selectAllCheckbox.checked) {
+                    selectedHRCandidates.add(checkbox.dataset.filename);
+                } else {
+                    selectedHRCandidates.delete(checkbox.dataset.filename);
+                }
+            });
+            
+            updateHRSelectedCount();
+        }
+
+        // Update individual HR selection
+        function updateHRSelection() {
+            const checkboxes = document.querySelectorAll('.hr-selection-checkbox');
+            selectedHRCandidates.clear();
+            
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    selectedHRCandidates.add(checkbox.dataset.filename);
+                }
+            });
+            
+            updateHRSelectedCount();
+        }
+
+        // Bulk HR action (approve, hold, reject)
+        function bulkHRAction(action) {
+            if (selectedHRCandidates.size === 0) {
+                showNotification('No candidates selected', 'error');
+                return;
+            }
+
+            selectedHRCandidates.forEach(filename => {
+                const candidate = resumeData.find(row => row.Filename === filename);
+                if (candidate) {
+                    candidate['HR_Selection_Status'] = action;
+                }
+            });
+
+            updateStats();
+            updateHRAnalytics();
+            renderTable();
+            
+            showNotification(`Selected candidates ${action === 'HR_Approved' ? 'approved' : action === 'HR_Hold' ? 'on hold' : 'rejected'}`, 'success');
+            localStorage.setItem('resumeData', JSON.stringify(resumeData));
+        }
+
+        // New HR workflow functions
+        function bulkSetPriority() {
+            const priority = document.getElementById('bulk-priority').value;
+            if (!priority || selectedHRCandidates.size === 0) {
+                showNotification('Please select candidates and priority level', 'error');
+                return;
+            }
+
+            selectedHRCandidates.forEach(filename => {
+                const candidate = resumeData.find(row => row.Filename === filename);
+                if (candidate) {
+                    candidate['HR_Priority'] = priority;
+                }
+            });
+
+            updateStats();
+            updateHRAnalytics();
+            renderTable();
+            
+            showNotification(`Priority set to ${priority} for ${selectedHRCandidates.size} candidates`, 'success');
+            localStorage.setItem('resumeData', JSON.stringify(resumeData));
+        }
+
+        function bulkScheduleInterview() {
+            if (selectedHRCandidates.size === 0) {
+                showNotification('Please select candidates first', 'error');
+                return;
+            }
+
+            selectedHRCandidates.forEach(filename => {
+                const candidate = resumeData.find(row => row.Filename === filename);
+                if (candidate) {
+                    candidate['Interview_Status'] = 'Scheduled';
+                    candidate['Workflow_Stage'] = 'Technical';
+                }
+            });
+
+            updateStats();
+            updateHRAnalytics();
+            renderTable();
+            
+            showNotification(`Interviews scheduled for ${selectedHRCandidates.size} candidates`, 'success');
+            localStorage.setItem('resumeData', JSON.stringify(resumeData));
+        }
+
+        function createHRDashboard() {
+            showNotification('HR Dashboard functionality integrated into main dashboard. Enable HR Selection Mode to access advanced features.', 'success');
+            
+            // Automatically enable HR mode if not already enabled
+            if (!hrModeEnabled) {
+                document.getElementById('enable-hr-mode').checked = true;
+                toggleHRMode();
+            }
+        }
+
+        function openHRWorkflow() {
+            // Show a modal or expand the HR analytics section
+            const analytics = document.getElementById('hr-analytics');
+            analytics.style.display = analytics.style.display === 'none' ? 'block' : 'none';
+            
+            if (analytics.style.display !== 'none') {
+                updateHRAnalytics();
+                showNotification('HR Workflow analytics displayed', 'success');
+            }
+        }
+
+        function exportInterviewSchedule() {
+            const interviewData = resumeData
+                .filter(candidate => candidate['Interview_Status'] === 'Scheduled')
+                .map(candidate => ({
+                    Filename: candidate.Filename,
+                    Email: candidate.Email,
+                    Phone: candidate.Phone,
+                    Category: candidate.Category,
+                    Score: candidate['Overall Score'],
+                    Priority: candidate['HR_Priority'] || 'Medium',
+                    Stage: candidate['Workflow_Stage'] || 'Screening',
+                    Notes: candidate['HR_Notes'] || ''
+                }));
+
+            if (interviewData.length === 0) {
+                showNotification('No scheduled interviews found', 'warning');
+                return;
+            }
+
+            const csv = convertToCSV(interviewData);
+            downloadCSV(csv, 'interview_schedule.csv');
+            showNotification(`Interview schedule exported for ${interviewData.length} candidates`, 'success');
+        }
+
+        // Enhanced filter functionality with score range
+        function setupScoreRangeFilter() {
+            const scoreMin = document.getElementById('score-min');
+            const scoreMax = document.getElementById('score-max');
+            const scoreDisplay = document.getElementById('score-range-display');
+
+            function updateScoreDisplay() {
+                scoreDisplay.textContent = `${parseFloat(scoreMin.value).toFixed(1)} - ${parseFloat(scoreMax.value).toFixed(1)}`;
+                filterData();
+            }
+
+            scoreMin.addEventListener('input', updateScoreDisplay);
+            scoreMax.addEventListener('input', updateScoreDisplay);
+        }
+
+        // Enhanced filter and search functionality
+        function filterData() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const categoryFilter = document.getElementById('category-filter').value;
+            const selectionFilter = document.getElementById('selection-filter').value;
+            const hrFilter = document.getElementById('hr-filter').value;
+            const priorityFilter = document.getElementById('priority-filter').value;
+            const interviewFilter = document.getElementById('interview-filter').value;
+            
+            // Score range filters
+            const scoreMin = parseFloat(document.getElementById('score-min').value);
+            const scoreMax = parseFloat(document.getElementById('score-max').value);
+            
+            filteredData = resumeData.filter(row => {
+                const matchesSearch = !searchTerm || 
+                    Object.values(row).some(value => 
+                        value.toString().toLowerCase().includes(searchTerm)
+                    );
+                
+                const matchesCategory = !categoryFilter || 
+                    row.Category.includes(categoryFilter);
+                
+                const matchesHR = !hrFilter || 
+                    (row['HR_Selection_Status'] || 'Pending Review') === hrFilter;
+                
+                const matchesPriority = !priorityFilter || 
+                    (row['HR_Priority'] || 'Medium') === priorityFilter;
+                
+                const matchesInterview = !interviewFilter || 
+                    (row['Interview_Status'] || 'Pending') === interviewFilter;
+                
+                // Score range filter
+                const candidateScore = parseFloat(row['Overall Score'] || 0);
+                const matchesScoreRange = candidateScore >= scoreMin && candidateScore <= scoreMax;
+                
+                let matchesSelection = true;
+                if (selectionFilter) {
+                    switch (selectionFilter) {
+                        case 'high-performer':
+                            matchesSelection = row['Selected_High_Performer'] === 'Yes' || 
+                                (parseFloat(row['Overall Score'] || 0) >= 0.75 && parseInt(row.Rating || 0) >= 3);
+                            break;
+                        case 'senior-level':
+                            matchesSelection = row['Selected_Senior_Level'] === 'Yes' || 
+                                (parseInt(row['Experience Years'] || 0) >= 3 && parseFloat(row['Overall Score'] || 0) >= 0.6);
+                            break;
+                        case 'entry-level':
+                            matchesSelection = row['Selected_Entry_Level'] === 'Yes' || 
+                                (parseInt(row['Experience Years'] || 0) <= 2 && parseFloat(row['Overall Score'] || 0) >= 0.3);
+                            break;
+                        case 'management-potential':
+                            matchesSelection = row['Selected_Management_Potential'] === 'Yes' || 
+                                ((row['Project Management Skills'] && row['Project Management Skills'] !== 'N/A' && row['Project Management Skills'].trim()) && 
+                                 parseInt(row['Experience Years'] || 0) >= 2);
+                            break;
+                        case 'technical-specialist':
+                            matchesSelection = row['Selected_Technical_Specialist'] === 'Yes' || 
+                                (row['Data Science Skills'] && row['Data Science Skills'] !== 'N/A' && row['Data Science Skills'].trim());
+                            break;
+                    }
+                }
+                
+                return matchesSearch && matchesCategory && matchesSelection && matchesHR && 
+                       matchesPriority && matchesInterview && matchesScoreRange;
+            });
+            
+            renderTable();
+        }
+
+        // Enhanced initialization with loading states and better UX
+        async function init() {
+            // Show loading indicator
+            showLoadingState(true);
+            
+            try {
+                // Load CSV data
+                await loadCSVData();
+                
+                // Setup score range filter
+                setupScoreRangeFilter();
+                
+                // Add event listeners for all filters with debouncing
+                setupEventListeners();
+                
+                // Initialize tooltips and responsive features
+                initializeResponsiveFeatures();
+                
+                showLoadingState(false);
+                showNotification('Dashboard loaded successfully!', 'success');
+            } catch (error) {
+                showLoadingState(false);
+                showNotification('Error loading dashboard. Please refresh the page.', 'error');
+                console.error('Initialization error:', error);
+            }
+        }
+
+        // Enhanced event listeners with debouncing for better performance
+        function setupEventListeners() {
+            // Debounce function for search input
+            function debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+
+            // Search with debouncing for better performance
+            document.getElementById('search-input').addEventListener('input', 
+                debounce(filterData, 300));
+            
+            // Immediate filtering for dropdowns
+            document.getElementById('category-filter').addEventListener('change', filterData);
+            document.getElementById('selection-filter').addEventListener('change', filterData);
+            document.getElementById('hr-filter').addEventListener('change', filterData);
+            document.getElementById('priority-filter').addEventListener('change', filterData);
+            document.getElementById('interview-filter').addEventListener('change', filterData);
+            document.getElementById('csv-file-input').addEventListener('change', handleFileUpload);
+        }
+
+        // Initialize responsive features and accessibility
+        function initializeResponsiveFeatures() {
+            // Add keyboard navigation support
+            document.addEventListener('keydown', handleKeyboardNavigation);
+            
+            // Add resize listener for responsive adjustments
+            window.addEventListener('resize', debounce(handleResize, 250));
+            
+            // Initialize focus management
+            setupFocusManagement();
+            
+            // Add touch support for mobile
+            addTouchSupport();
+        }
+
+        // Handle keyboard navigation
+        function handleKeyboardNavigation(event) {
+            // Escape key to close notifications
+            if (event.key === 'Escape') {
+                const notification = document.querySelector('.notification');
+                if (notification) {
+                    notification.remove();
+                }
+            }
+            
+            // Ctrl+F to focus search
+            if (event.ctrlKey && event.key === 'f') {
+                event.preventDefault();
+                document.getElementById('search-input').focus();
+            }
+        }
+
+        // Handle window resize for responsive adjustments
+        function handleResize() {
+            // Adjust table display based on screen size
+            const table = document.querySelector('table');
+            const container = document.querySelector('.table-container');
+            
+            if (window.innerWidth < 768) {
+                table.style.fontSize = '10px';
+                container.style.overflowX = 'auto';
+            } else if (window.innerWidth < 1200) {
+                table.style.fontSize = '11px';
+            } else {
+                table.style.fontSize = 'clamp(10px, 1.8vw, 11px)';
+            }
+            
+            // Update stats layout
+            const stats = document.querySelector('.stats');
+            if (window.innerWidth < 480) {
+                stats.style.gridTemplateColumns = 'repeat(2, 1fr)';
+            } else if (window.innerWidth < 768) {
+                stats.style.gridTemplateColumns = 'repeat(auto-fit, minmax(120px, 1fr))';
+            } else {
+                stats.style.gridTemplateColumns = 'repeat(auto-fit, minmax(160px, 1fr))';
+            }
+        }
+
+        // Enhanced loading state management
+        function showLoadingState(isLoading) {
+            const existingLoader = document.querySelector('.loading-overlay');
+            
+            if (isLoading) {
+                if (!existingLoader) {
+                    const loader = document.createElement('div');
+                    loader.className = 'loading-overlay';
+                    loader.innerHTML = `
+                        <div class="loading-spinner">
+                            <div class="spinner"></div>
+                            <p>Loading dashboard...</p>
+                        </div>
+                    `;
+                    document.body.appendChild(loader);
+                }
+            } else {
+                if (existingLoader) {
+                    existingLoader.remove();
+                }
+            }
+        }
+
+        // Setup focus management for accessibility
+        function setupFocusManagement() {
+            // Add focus indicators
+            const focusableElements = document.querySelectorAll(
+                'button, input, select, a, [tabindex]:not([tabindex="-1"])'
+            );
+            
+            focusableElements.forEach(element => {
+                element.addEventListener('focus', function() {
+                    this.style.outline = '2px solid #90cdf4';
+                    this.style.outlineOffset = '2px';
+                });
+                
+                element.addEventListener('blur', function() {
+                    this.style.outline = '';
+                    this.style.outlineOffset = '';
+                });
+            });
+        }
+
+        // Add touch support for mobile devices
+        function addTouchSupport() {
+            // Add touch feedback for interactive elements
+            const interactiveElements = document.querySelectorAll(
+                '.nav-button, .stat-item, .category, button, input'
+            );
+            
+            interactiveElements.forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                }, { passive: true });
+                
+                element.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                }, { passive: true });
+            });
+        }
+
+        // Enhanced notification system with better positioning and animations
+        function showNotification(message, type = 'warning') {
+            // Remove any existing notifications
+            const existing = document.querySelector('.notification');
+            if (existing) {
+                existing.remove();
+            }
+
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <span class="notification-icon">
+                        ${type === 'success' ? '✅' : type === 'error' ? '❌' : '⚠️'}
+                    </span>
+                    <span class="notification-message">${message}</span>
+                    <button class="notification-close" onclick="this.parentElement.parentElement.remove()" aria-label="Close notification">×</button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateY(0)';
+            }, 10);
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                if (notification && notification.parentElement) {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translateY(-100%)';
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 5000);
+        }
+
+        // Debounce utility function
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Handle file upload
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    parseCSVData(e.target.result);
+                    showNotification('CSV file loaded successfully!', 'success');
+                } catch (error) {
+                    showNotification('Error parsing CSV file. Please check the format.', 'error');
+                    console.error('CSV parsing error:', error);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Show notification to user
+        function showNotification(message, type = 'warning') {
+            // Remove any existing notifications
+            const existing = document.querySelector('.notification');
+            if (existing) {
+                existing.remove();
+            }
+
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                ${message}
+                <span class="close" onclick="this.parentElement.remove()">&times;</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                if (notification && notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        // Call init on page load
+        window.onload = init;
+    </script>
+</body>
+</html>
